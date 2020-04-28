@@ -26,6 +26,63 @@
         android:gravity="center"
         android:layout_alignParentLeft="true" />
 
+    <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:columnCount="4"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+
+        android:layout_toEndOf="@+id/checkSolutionButton"
+        android:layout_toRightOf="@+id/checkSolutionButton">
+
+
+        <Button android:text="1"
+            android:textSize="25sp"
+            android:id="@+id/one"
+            />
+
+        <Button android:text="2"
+            android:textSize="25sp"
+            android:id="@+id/two"/>
+
+        <Button android:text="3"
+            android:textSize="25sp"
+            android:id="@+id/three"/>
+
+        <Button android:text="4"
+            android:textSize="25sp"
+            android:id="@+id/four"/>
+
+        <Button android:text="5"
+            android:textSize="25sp"
+            android:id="@+id/five"/>
+
+        <Button android:text="6"
+            android:textSize="25sp"
+            android:id="@+id/six"/>
+
+        <Button android:text="7"
+            android:textSize="25sp"
+            android:id="@+id/seven"/>
+
+        <Button android:text="8"
+            android:textSize="25sp"
+            android:id="@+id/eight"/>
+
+        <Button android:text="9"
+            android:textSize="25sp"
+            android:id="@+id/nine"/>
+
+
+    </GridLayout>
+    <!--<Spinner
+        android:id="@+id/numbers"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />-->
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

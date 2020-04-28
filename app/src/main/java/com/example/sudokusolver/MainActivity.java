@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.TextView;
@@ -22,7 +23,7 @@ import android.widget.Toast;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     GridView gridview;
     AssetManager assetManager;
     int puzzleLevel;
@@ -44,6 +45,25 @@ public class MainActivity extends AppCompatActivity {
         } catch (IOException e) {
             Log.i("Yo", "OH NO");
         }
+
+        Button mClickButton1 = (Button)findViewById(R.id.one);
+        mClickButton1.setOnClickListener(this);
+        Button mClickButton2 = (Button)findViewById(R.id.two);
+        mClickButton2.setOnClickListener(this);
+        Button mClickButton3 = (Button)findViewById(R.id.three);
+        mClickButton3.setOnClickListener(this);
+        Button mClickButton4 = (Button)findViewById(R.id.four);
+        mClickButton4.setOnClickListener(this);
+        Button mClickButton5 = (Button)findViewById(R.id.five);
+        mClickButton5.setOnClickListener(this);
+        Button mClickButton6 = (Button)findViewById(R.id.six);
+        mClickButton6.setOnClickListener(this);
+        Button mClickButton7 = (Button)findViewById(R.id.seven);
+        mClickButton7.setOnClickListener(this);
+        Button mClickButton8 = (Button)findViewById(R.id.eight);
+        mClickButton8.setOnClickListener(this);
+        Button mClickButton9 = (Button)findViewById(R.id.nine);
+        mClickButton9.setOnClickListener(this);
     }
 
     @Override
@@ -92,11 +112,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void solvePuzzle(View view) {
+
         TextAdapter textAdapter = (TextAdapter) gridview.getAdapter();
         SudokuSolver sudokuSolver = new SudokuSolver();
         Integer[][] temp=make2d(textAdapter.grid);
+        /*for(int n=0;n<temp.length;n++){
+            for(int i=0;i<temp.length;i++) {
+
+                if (temp[n][i])
+            }
+        }*/
+
         textAdapter.grid2d=temp;
-        sudokuSolver.solve(0, 0, textAdapter.grid2d);
+
+        boolean solved=sudokuSolver.solve(0, 0, textAdapter.grid2d);
         int x = 0;
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
@@ -159,6 +188,54 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(view.getContext(), "Wrong!!",
                     Toast.LENGTH_LONG).show();
         }
+    }
+
+    @Override
+    public void onClick(View v) {
+        TextAdapter textAdapter = (TextAdapter) gridview.getAdapter();
+
+        switch (v.getId()){
+            case R.id.one:
+                textAdapter.setClickedButton(1);
+                break;
+            case R.id.two:
+                textAdapter.setClickedButton(2);
+
+                break;
+            case R.id.three:
+                textAdapter.setClickedButton(3);
+
+                break;
+            case R.id.four:
+                textAdapter.setClickedButton(4);
+
+                break;
+            case R.id.five:
+                textAdapter.setClickedButton(5);
+
+                break;
+            case R.id.six:
+                textAdapter.setClickedButton(6);
+
+                break;
+            case R.id.seven:
+                textAdapter.setClickedButton(7);
+
+                break;
+            case R.id.eight:
+                textAdapter.setClickedButton(8);
+
+                break;
+            case R.id.nine:
+                textAdapter.setClickedButton(9);
+
+                break;
+            default:
+                textAdapter.setClickedButton(0);
+                break;
+        }
+        textAdapter.updateGrid();
+
     }
 }
 

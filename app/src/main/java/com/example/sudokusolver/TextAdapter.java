@@ -1,16 +1,20 @@
 package com.example.sudokusolver;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.text.InputFilter;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -22,6 +26,35 @@ public class TextAdapter extends BaseAdapter {
     public Integer[] grid = new Integer[81];
     public Integer[][] grid2d = new Integer[9][9];
 
+    public TextView getTextViewNeeded() {
+        return textViewNeeded;
+    }
+
+    public void setTextViewNeeded(TextView textViewNeeded) {
+        this.textViewNeeded = textViewNeeded;
+    }
+
+    public TextView textViewNeeded;
+
+    public int getClickedButton() {
+        return clickedButton;
+    }
+
+    public void setClickedButton(int clickedButton) {
+        this.clickedButton = clickedButton;
+    }
+
+    public int clickedButton=0;
+
+    public int getGridCellClicked() {
+        return gridCellClicked;
+    }
+
+    public void setGridCellClicked(int gridCellClicked) {
+        this.gridCellClicked = gridCellClicked;
+    }
+
+    public int gridCellClicked=100;
     public TextAdapter(Context c, InputStream inputStream) throws IOException {
         mContext = c;
 
@@ -47,7 +80,6 @@ public class TextAdapter extends BaseAdapter {
                         row++;
                     }
                     grid[i] = Integer.valueOf(element);
-                    System.out.println("HERERERER!!!");
                     grid2d[row][col] = Integer.valueOf(element);
                 }
                 col++;
@@ -69,9 +101,11 @@ public class TextAdapter extends BaseAdapter {
     }
 
     // create a new ImageView for each item referenced by the Adapter
-    public View getView(final int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, final View convertView, ViewGroup parent) {
         final TextView textView;
-        if (convertView == null) {
+
+
+         if (convertView == null) {
             // if it's not recycled, initialize some attributes
             textView = new EditText(mContext);
             textView.setLayoutParams(new GridView.LayoutParams(85, 85));
@@ -95,20 +129,24 @@ public class TextAdapter extends BaseAdapter {
             textView.setEnabled(false);
 
         } else {
+
             textView.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View view, MotionEvent motionEvent) {
+
                     if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                        if (grid[position] == 0) {
-                            grid[position] = 1;
-                            textView.setText(String.valueOf(grid[position]));
-                        } else {
-                            if (grid[position] >= 9)
-                                grid[position] = 1;
-                            else
-                                grid[position]++;
-                            textView.setText(String.valueOf(grid[position]));
-                        }
+
+                        setGridCellClicked(position);
+                        long color = 0xffffffffL & textView.getCurrentTextColor();
+                        Toast.makeText(view.getContext(), Long.toHexString(color),
+                                Toast.LENGTH_LONG).show();
+                        textView.getBackground().setAlpha(100);
+                        textView.setBackgroundColor(Color.parseColor("#a4c639"));
+                        //textView.setBackgroundResource(R.color.colorAccent);
+
+
+                        setTextViewNeeded(textView);
+                        updateGrid();
                     }
                     return true;
                 }
@@ -116,6 +154,17 @@ public class TextAdapter extends BaseAdapter {
         }
 
         return textView;
+    }
+
+    @SuppressWarnings("ResourceAsColor")
+    public void updateGrid(){
+        if(getClickedButton()!=0 && (getGridCellClicked()!=100)){
+            grid[getGridCellClicked()]=getClickedButton();
+            getTextViewNeeded().setText(String.valueOf(grid[getGridCellClicked()]));
+            setClickedButton(0);
+            //getTextViewNeeded().setBackgroundColor(Color.TRANSPARENT);
+
+        }
     }
 }
 
