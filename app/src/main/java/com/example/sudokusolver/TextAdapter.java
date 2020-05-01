@@ -44,7 +44,7 @@ public class TextAdapter extends BaseAdapter {
         this.clickedButton = clickedButton;
     }
 
-    public int clickedButton=0;
+    public int clickedButton=10;
 
     public int getGridCellClicked() {
         return gridCellClicked;
@@ -158,10 +158,13 @@ public class TextAdapter extends BaseAdapter {
 
     @SuppressWarnings("ResourceAsColor")
     public void updateGrid(){
-        if(getClickedButton()!=0 && (getGridCellClicked()!=100)){
+        if(getClickedButton()!=10 && getGridCellClicked()!=100){
             grid[getGridCellClicked()]=getClickedButton();
-            getTextViewNeeded().setText(String.valueOf(grid[getGridCellClicked()]));
-            setClickedButton(0);
+            grid2d=MainActivity.make2d(grid);
+            if(getClickedButton()==0){
+                getTextViewNeeded().setText("");
+            }else  getTextViewNeeded().setText(String.valueOf(grid[getGridCellClicked()]));
+            setClickedButton(10);
             //getTextViewNeeded().setBackgroundColor(Color.TRANSPARENT);
 
         }
